@@ -1,0 +1,30 @@
+# ARGS: 56
+@main(n: int) {
+	p: int = call @parity n;
+	print p;
+}
+
+@parity(n: int) : int {
+	zero: int = const 0;
+	sum: int = const 0;
+	two: int = const 2;
+	cond: bool = eq n zero;
+	br cond .end .rec;
+.rec:
+	v0: int = call @mod n two;
+	v1: int = div n two;
+	r: int = call @parity v1;
+	sum: int = add r v0;
+.end:
+	p: int = call @mod sum two;
+	ret p;
+}
+
+@mod(a0: int, a1: int) : int {
+	v0: int = div a0 a1;
+	v1: int = mul v0 a1;
+	v2: int = sub a0 v1;
+	ret v2;
+}
+
+
